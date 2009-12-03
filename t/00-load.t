@@ -2,5 +2,8 @@
 
 use strict;
 use warnings;
-use Test::More tests => 1;
-use ok 'Catalyst::Model::LDAP::FromAuthentication';
+use Test::More;
+use_ok 'Catalyst::Model::LDAP::FromAuthentication';
+
+done_testing;
+

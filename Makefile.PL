@@ -1,11 +1,30 @@
-use inc::Module::Install;
+use strict;
+use warnings;
+use inc::Module::Install 0.91;
+use Module::Install::AuthorRequires;
+use Module::Install::AuthorTests;
 
 name 'Catalyst-Model-LDAP-FromAuthentication';
 all_from 'lib/Catalyst/Model/LDAP/FromAuthentication.pm';
 
+requires 'Moose';
+requires 'namespace::autoclean';
+requires 'Catalyst::Component::InstancePerContext';
+requires 'Catalyst::Model::LDAP' => '0.16';
+requires 'Catalyst::Authentication::Store::LDAP' => '0.1004';
+
 build_requires 'Catalyst::Runtime';
-build_requires 'Test::WWW::Mechanize::Catalyst';
-build_requires 'Test::More';
-build_requires 'ok';
+build_requires 'Test::More' => '0.88';
+
+author_requires 'Test::Pod' => '1.14';
+author_requires 'Test::Pod::Coverage' => '1.04';
+
+author_tests 't/author';
+
+if ($Module::Install::AUTHOR) {
+    system("pod2text lib/Catalyst/Model/LDAP/FromAuthentication.pm > README")
+        and die $!;
+}
 
 WriteAll();
+
