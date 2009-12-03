@@ -1,3 +1,4 @@
+^Catalyst-Model-LDAP-FromAuthentication-
 .gitignore
 .git/
 blib
