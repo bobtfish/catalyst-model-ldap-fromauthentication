@@ -21,6 +21,8 @@ author_requires 'Test::Pod::Coverage' => '1.04';
 
 author_tests 't/author';
 
+resources repository => 'git://github.com/bobtfish/catalyst-model-ldap-fromauthentication.git';
+
 if ($Module::Install::AUTHOR) {
     system("pod2text lib/Catalyst/Model/LDAP/FromAuthentication.pm > README")
         and die $!;
