@@ -84,7 +84,8 @@ Copyright 2009 state51
 
 =head1 LICENSE
 
-his program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
 
 =cut
 
