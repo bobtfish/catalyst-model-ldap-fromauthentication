@@ -2,15 +2,34 @@ package Catalyst::Model::LDAP::FromAuthentication;
 use Moose;
 use Catalyst::Model::LDAP::Connection;
 use Catalyst::Model::LDAP::Entry;
+use MooseX::Types::Common::String qw/NonEmptySimpleStr/;
 use 5.005003;
 use namespace::autoclean;
 
-our $VERSION = '0.00_01';
+our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
-extends qw/Catalyst::Model::LDAP/;
+extends qw/Catalyst::Model/;
 
 with 'Catalyst::Component::InstancePerContext';
+
+has connection_class => (
+    isa => NonEmptySimpleStr,
+    is => 'ro',
+    default => 'Catalyst::Model::LDAP::Connection',
+);
+
+has entry_class => (
+    isa => NonEmptySimpleStr,
+    is => 'ro',
+    default => 'Catalyst::Model::LDAP::Entry',
+);
+
+has base => (
+    isa => NonEmptySimpleStr,
+    is => 'ro',
+    default => 'dc=com',
+);
 
 after COMPONENT => sub {
     my ($class, $c, $args) = @_;
@@ -21,12 +40,12 @@ sub build_per_context_instance {
     my ($self, $c) = @_;
     my $user = $c->user;
     die("No authenticated user") unless $user;
-    # FIXME - This is crap, why do I need to do any of this!
-    my $i = $user->can('_ldap_connection') ? $user->_ldap_connection->()
-        : $user->ldap_connection;
-    my $model = bless $i, 'Catalyst::Model::LDAP::Connection';
-    $model->{entry_class} ||= 'Catalyst::Model::LDAP::Entry';
-    $model->{base} ||= 'dc=cissme, dc=com';
+    die("User $user does not have an >ldap_connection method")
+        unless $user->can('ldap_connection');
+    my $connection = $user->ldap_connection;
+    my $model = bless $connection, $self->connection_class;
+    $model->{entry_class} = $self->entry_class;
+    $model->{base} = $self->base;
     return $model;
 }
 
