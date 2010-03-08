@@ -1,0 +1,6 @@
+0.01 2010-03-08
+  - Fix up for the correct method in Authentication::Store::LDAP::User
+  - Add entry_class, connection_class and base config options.
+
+0.00_01
+   - Initial dev release
