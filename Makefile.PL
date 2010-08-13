@@ -13,6 +13,7 @@ requires 'Catalyst::Component::InstancePerContext';
 requires 'Catalyst::Model::LDAP' => '0.16';
 requires 'Catalyst::Authentication::Store::LDAP' => '0.1004';
 requires 'MooseX::Types::Common::String';
+requires 'MooseX::Types::LoadableClass' => '0.005';
 
 build_requires 'Catalyst::Runtime';
 build_requires 'Test::More' => '0.88';

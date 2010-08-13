@@ -1,8 +1,7 @@
 package Catalyst::Model::LDAP::FromAuthentication;
 use Moose;
-use Catalyst::Model::LDAP::Connection;
-use Catalyst::Model::LDAP::Entry;
-use MooseX::Types::Common::String qw/NonEmptySimpleStr/;
+use MooseX::Types::LoadableClass qw/ LoadableClass /;
+use MooseX::Types::Common::String qw/ NonEmptySimpleStr /;
 use 5.005003;
 use namespace::autoclean;
 
@@ -13,15 +12,18 @@ extends qw/Catalyst::Model/;
 
 with 'Catalyst::Component::InstancePerContext';
 
+
 has connection_class => (
-    isa => NonEmptySimpleStr,
+    isa => LoadableClass,
     is => 'ro',
+    coerce => 1,
     default => 'Catalyst::Model::LDAP::Connection',
 );
 
 has entry_class => (
-    isa => NonEmptySimpleStr,
+    isa => LoadableClass,
     is => 'ro',
+    coerce => 1,
     default => 'Catalyst::Model::LDAP::Entry',
 );
 
@@ -32,7 +34,7 @@ has base => (
 );
 
 after COMPONENT => sub {
-    my ($class, $c, $args) = @_;
+    my ($class, $c, @args) = @_;
     die("Application is not using Catalyst::Plugin::Authentication, $class cannot work.\n") unless $c->can('user');
 };
 
