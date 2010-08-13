@@ -5,7 +5,7 @@ use MooseX::Types::Common::String qw/ NonEmptySimpleStr /;
 use 5.005003;
 use namespace::autoclean;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 $VERSION = eval $VERSION;
 
 extends qw/Catalyst::Model/;
